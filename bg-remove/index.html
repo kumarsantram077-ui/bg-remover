@@ -298,5 +298,109 @@
     });
 </script>
 
+</body><!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>स्मार्ट एआई दोस्त</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #0b0e14; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .card { background: #151924; border: 1px solid #282f42; border-radius: 20px; padding: 25px; width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .title { font-size: 1.3rem; font-weight: bold; text-align: center; margin-bottom: 15px; color: #00d2ff; }
+        .chat-box { background: #0d1017; border-radius: 12px; padding: 15px; min-height: 90px; max-height: 200px; overflow-y: auto; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.5; border-left: 4px solid #ff007f; word-wrap: break-word; }
+        .input-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        .input-group input[type="text"] { flex: 1; padding: 12px 18px; border-radius: 25px; border: 1px solid #282f42; background: #0d1017; color: #fff; outline: none; font-size: 0.95rem; }
+        .input-group input[type="text"]:focus { border-color: #00d2ff; }
+        .btn-ask { background: linear-gradient(135deg, #a812ef 0%, #ff007f 100%); color: white; border: none; padding: 12px 20px; border-radius: 25px; font-weight: bold; cursor: pointer; white-space: nowrap; }
+        .upload-section { display: flex; align-items: center; justify-content: space-between; background: #0d1017; padding: 12px 15px; border-radius: 12px; border: 1px dashed #282f42; }
+        .upload-section span { font-size: 0.85rem; color: #a0a5b5; }
+        .btn-upload { background: #00d2ff; color: #0d1017; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+        #fileInput { display: none; }
+        .image-preview { max-width: 100%; border-radius: 10px; margin-top: 15px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="title">स्मार्ट एआई दोस्त (A to Z काम) 🤖💬</div>
+
+    <div class="chat-box" id="chatBox">
+        अरे भाई! मैं एक्टिव हो चुका हूँ। मुझसे कुछ भी पूछो—कोई सवाल हो या जोक सुनना हो! नीचे गैलरी से फोटो अपलोड करने का बटन भी हाजिर है! 😜🔥
+    </div>
+
+    <div class="input-group">
+        <input type="text" id="userInput" placeholder="कुछ भी पूछें..." />
+        <button class="btn-ask" id="askBtn">पूछें 🚀</button>
+    </div>
+
+    <div class="upload-section">
+        <span>अपनी गैलरी से फोटो लगाएं:</span>
+        <button class="btn-upload" id="uploadBtn">📁 फोटो अपलोड करें</button>
+        <input type="file" id="fileInput" accept="image/*" />
+    </div>
+
+    <img id="imagePreview" class="image-preview" alt="Preview" />
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var askBtn = document.getElementById("askBtn");
+        var userInput = document.getElementById("userInput");
+        var chatBox = document.getElementById("chatBox");
+        var uploadBtn = document.getElementById("uploadBtn");
+        var fileInput = document.getElementById("fileInput");
+        var imagePreview = document.getElementById("imagePreview");
+
+        // 1. Photo Upload
+        uploadBtn.onclick = function () {
+            fileInput.click();
+        };
+
+        fileInput.onchange = function (e) {
+            var file = e.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (evt) {
+                    imagePreview.src = evt.target.result;
+                    imagePreview.style.display = "block";
+                    chatBox.innerHTML = "✅ **आपकी फोटो अपलोड हो गई है!**";
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        // 2. Question Ask Button
+        function sendQuestion() {
+            var text = userInput.value.trim();
+            if (!text) {
+                chatBox.innerHTML = "⚠️ कृपया पहले कोई सवाल लिखें!";
+                return;
+            }
+
+            chatBox.innerHTML = "⏳ सोच रहा हूँ, कृपया रुकें...";
+
+            fetch("https://text.pollinations.ai/" + encodeURIComponent(text))
+                .then(function (res) { return res.text(); })
+                .then(function (data) {
+                    chatBox.innerHTML = "🤖 **जवाब:**<br>" + data.replace(/\n/g, "<br>");
+                })
+                .catch(function () {
+                    chatBox.innerHTML = "🤖 आपका सवाल: '" + text + "' मिला, लेकिन सर्वर कनेक्ट नहीं हो सका। फिर कोशिश करें!";
+                });
+
+            userInput.value = "";
+        }
+
+        askBtn.onclick = sendQuestion;
+
+        userInput.onkeypress = function (e) {
+            if (e.key === "Enter") sendQuestion();
+        };
+    });
+</script>
+
 </body>
+</html>
 </html>
