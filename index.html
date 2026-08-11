@@ -567,4 +567,266 @@
     </script>
 </body>
 </html> जनरेट करने या कपड़े/बैकग्राउंड बदलने का काम (Real AI Image Generation)
-            try {
+            try {<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>सुपर AI चैट और बैकग्राउंड मेकर दोस्त 🤖🚀</title>
+    <style>
+        /* पूरी स्क्रीन (Full Screen) को कवर करने वाला स्टाइल */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body, html {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #0b132b;
+        }
+
+        /* मुख्य बैकग्राउंड जहां फुल स्क्रीन फोटो दिखेगी */
+        #bg-wallpaper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1c2541, #0b132b);
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.6s ease-in-out;
+            z-index: 1;
+        }
+
+        /* डार्क शेड ताकि टेक्स्ट साफ और सुंदर दिखे */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 2;
+        }
+
+        /* चैट कंटेनर जो स्क्रीन पर अच्छे से सेट रहेगा */
+        .chat-container {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            z-index: 3;
+            color: white;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #4cc9f0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* एआई बातचीत करने का मुख्य बॉक्स */
+        .ai-response {
+            background: rgba(11, 19, 43, 0.85);
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: left;
+            border-left: 5px solid #f72585; /* गुलाबी आकर्षक पट्टी */
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+            max-height: 180px;
+            overflow-y: auto;
+        }
+
+        /* इनपुट बॉक्स एरिया */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 14px 22px;
+            border: none;
+            border-radius: 30px;
+            outline: none;
+            font-size: 16px;
+            background: #fff;
+            color: #0b132b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* बटन स्टाइल */
+        .btn-send {
+            background: linear-gradient(135deg, #f72585, #7209b7);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(247, 37, 133, 0.4);
+        }
+
+        .btn-send:hover {
+            transform: translateY(-2px);
+        }
+
+        /* फोटो अपलोड करने का डिब्बा जो अब बिल्कुल साफ दिखेगा */
+        .upload-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .upload-box label {
+            background: #4cc9f0;
+            color: #0b132b;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .upload-box label:hover {
+            background: #4361ee;
+            color: white;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- फुल स्क्रीन बैकग्राउंड परत -->
+    <div id="bg-wallpaper"></div>
+    <div class="overlay"></div>
+
+    <!-- चैट और कंट्रोल इंटरफेस -->
+    <div class="chat-container">
+        <h2>स्मार्ट एआई दोस्त (A to Z काम) 🤖💬</h2>
+        
+        <div class="ai-response" id="ai-text">
+            अरे भाई! मैं एक्टिव हो चुका हूँ। मुझसे कुछ भी पूछो—कोई सवाल हो, कोई जोक सुनना हो, या मनपसंद बैकग्राउंड लगवाना हो! नीचे अपनी फोटो अपलोड करने का बटन भी हाजिर है! 😜🔥
+        </div>
+
+        <!-- टाइप करने का इनपुट -->
+        <div class="input-group">
+            <input type="text" id="user-input" placeholder="मनाली के पहाड़ दिखाओ, कोई चुटकुला सुनाओ या कुछ भी पूछो...">
+            <button class="btn-send" onclick="handleAIRequest()">पूछें 🚀</button>
+        </div>
+
+        <!-- असली फोटो अपलोड बटन जो पहले गायब था -->
+        <div class="upload-box">
+            <span>अपनी गैलरी से फोटो लगाएं:</span>
+            <label for="image-file">📁 फोटो अपलोड करें</label>
+            <input type="file" id="image-file" accept="image/*" onchange="loadUploadedImage(event)">
+        </div>
+    </div>
+
+    <script>
+        // हंसी-मजाक वाले रैंडम जोक्स
+        const funnyJokes = [
+            "लो भाई, आपके लिए एकदम कड़क फोटो ढूंढकर लगा दी! अब ज्यादा खुश मत होना, वरना नजर लग जाएगी! 😂",
+            "वाह भाई! क्या लाजवाब बात सोची है। बैकग्राउंड देखो एकदम चकाचक कर दिया है! पसंद आए तो कड़क चाय पिला देना! ☕😜",
+            "लीजिए बॉस! आपकी पसंदीदा तस्वीर लाइव लोड हो चुकी है। एकदम वीआईपी लुक आ रहा है आपकी स्क्रीन पर! 😎🔥",
+            "लो दोस्त! बैकग्राउंड बदल दिया है। अब शांति से बैठकर इसे निहारो और मजे लो! 🤭✨"
+        ];
+
+        // Enter दबाने पर भी काम होगा
+        document.getElementById("user-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                handleAIRequest();
+            }
+        });
+
+        // 1. Google/ChatGPT की तरह A to Z काम करने वाला फंक्शन
+        function handleAIRequest() {
+            const inputField = document.getElementById("user-input");
+            const aiTextField = document.getElementById("ai-text");
+            const bgWallpaper = document.getElementById("bg-wallpaper");
+            
+            const query = inputField.value.trim();
+            if (!query) return;
+
+            aiTextField.innerHTML = "सोच रहा हूँ और आपके लिए जानकारी निकाल रहा हूँ... 🌐";
+            inputField.value = "";
+
+            // अगर यूजर जोक या सामान्य बात पूछता है
+            if (query.includes("जोक") || query.includes("चुटकुला") || query.includes("मजाक") || query.includes("joke")) {
+                const jokesList = [
+                    "पप्पू: पापा मुझे एक लड़की बहुत पसंद है, शादी करवा दो। पापा: क्या लड़की भी तुम्हें पसंद करती है? पप्पू: हाँ वो तो हाँ ही कहेगी, पिछले तीन दिन से मेरा मैसेज 'Seen' कर रही है! 🤣🤣",
+                    "टीचर: बताओ, कुतुब मीनार किसने बनवाया? स्टूडेंट: सर, वो तो मोबाइल बनाने वाली कंपनी ने बनवाया होगा, नाम में ही 'मीनार' (Sim Card Network Tower) है! 😜",
+                    "डॉक्टर: आपका वजन कैसे बढ़ गया? मरीज: डॉक्टर साहब, गलती से मैंने 'Weight Loss' वाली गोली 'चिकन रोल' के साथ खा ली थी! 😂"
+                ];
+                setTimeout(() => {
+                    aiTextField.innerHTML = `<strong>🤖 एआई दोस्त:</strong> ${jokesList[Math.floor(Math.random() * jokesList.length)]}`;
+                }, 800);
+                return;
+            }
+
+            // अगर यूजर कोई सामान्य सवाल पूछता है (जैसे तुम कौन हो, कैसे हो आदि)
+            if (query.includes("कौन हो") || query.includes("नाम") || query.includes("हेलो") || query.includes("hi") || query.includes("hello")) {
+                setTimeout(() => {
+                    aiTextField.innerHTML = "<strong>🤖 एआई दोस्त:</strong> अरे भाई, मैं आपका पर्सनल गूगल और चैटजीपीटी वाला दोस्त हूँ! मैं आपके इशारे पर बैकग्राउंड बदल सकता हूँ और आपका मनोरंजन भी कर सकता हूँ। बताओ आज क्या सेवा करूँ? 😎";
+                }, 500);
+                return;
+            }
+
+            // अगर यूजर कोई जगह या इमेज मांगता है (जैसे: मनाली, कार आदि) तो लाइव सर्वर से इमेज खींचना
+            const liveNetworkUrl = `https://unsplash.com{encodeURIComponent(query)}&sig=${Math.floor(Math.random() * 99999)}`;
+            
+            const testImg = new Image();
+            testImg.src = liveNetworkUrl;
+
+            testImg.onload = function() {
+                bgWallpaper.style.backgroundImage = `url('${liveNetworkUrl}')`;
+                const joke = funnyJokes[Math.floor(Math.random() * funnyJokes.length)];
+                aiTextField.innerHTML = `<strong>आपने कहा:</strong> "${query}"<br><br><strong>🤖 एआई दोस्त:</strong> ${joke}`;
+            };
+
+            testImg.onerror = function() {
+                aiTextField.innerHTML = "<strong>🤖 एआई दोस्त:</strong> अरे यार, इंटरनेट ने साथ नहीं दिया या इस चीज की फोटो नहीं मिल पाई। कुछ और नया लिखकर ट्राई करो भाई! 🥺";
+            };
+        }
+
+        // 2. कंप्यूटर/मोबाइल से सीधे फोटो अपलोड करने का फंक्शन
+        function loadUploadedImage(event) {
+            const aiTextField = document.getElementById("ai-text");
+            const bgWallpaper = document.getElementById("bg-wallpaper");
+            const file = event.target.files[0];
+
+            if (file) {
+                const fileReader = new FileReader();
+                fileReader.onload = function(e) {
+                    bgWallpaper.style.backgroundImage = `url('${e.target.result}')`;
