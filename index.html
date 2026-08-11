@@ -829,4 +829,334 @@
             if (file) {
                 const fileReader = new FileReader();
                 fileReader.onload = function(e) {
-                    bgWallpaper.style.backgroundImage = `url('${e.target.result}')`;
+                    bgWallpaper.style.backgroundImage = `url('${e.<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro AI Assistant & Clothes/BG Changer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #090a10;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .container {
+            background: #121522;
+            border: 1px solid #23293f;
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            color: #00d2ff;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 0.85rem;
+            color: #8b93b0;
+        }
+
+        /* Preset Buttons Section */
+        .preset-title {
+            font-size: 0.85rem;
+            color: #ff007f;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .presets {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .preset-btn {
+            background: #1c2135;
+            border: 1px solid #323b5c;
+            color: #e0e6ff;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .preset-btn:hover {
+            background: #00d2ff;
+            color: #000;
+            border-color: #00d2ff;
+        }
+
+        /* Output Box */
+        .chat-box {
+            background: #0a0c14;
+            border-radius: 12px;
+            padding: 15px;
+            min-height: 100px;
+            max-height: 250px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            border-left: 4px solid #00d2ff;
+            word-wrap: break-word;
+        }
+
+        .generated-img {
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 10px;
+            display: none;
+            border: 1px solid #333;
+        }
+
+        /* Input Controls */
+        .input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .input-group input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 25px;
+            border: 1px solid #283049;
+            background: #090a10;
+            color: #fff;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .input-group input[type="text"]:focus {
+            border-color: #00d2ff;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            border: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-ask {
+            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            color: white;
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #a812ef 0%, #ff007f 100%);
+            color: white;
+        }
+
+        /* Gallery Upload */
+        .upload-card {
+            background: #0a0c14;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px dashed #2d3654;
+            margin-top: 10px;
+        }
+
+        .upload-card span {
+            font-size: 0.8rem;
+            color: #9aa1b9;
+        }
+
+        .btn-upload {
+            background: #23293f;
+            color: #00d2ff;
+            border: 1px solid #00d2ff;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .user-preview {
+            max-width: 100%;
+            max-height: 180px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Pro AI Master (A to Z) 🤖✨</h1>
+        <p>सवाल पूछें, HD फोटो बनाएं या कपड़े/बैकग्राउंड चेंज स्टाइल चुनें!</p>
+    </div>
+
+    <!-- Ready Presets for Clothes / Styles -->
+    <div class="preset-title">⚡ Quick Styles / कपड़े व बैकग्राउंड आइडिया:</div>
+    <div class="presets">
+        <button class="preset-btn" onclick="applyPreset('लड़का ब्लैक सुट कोट-पेंट में, स्मार्ट लुक')">👔 कोट-पेंट (Suit)</button>
+        <button class="preset-btn" onclick="applyPreset('लड़की पारंपरिक भारतीय ड्रेस में, फेस्टिवल वाइब')">👗 ट्रेडिशनल ड्रेस</button>
+        <button class="preset-btn" onclick="applyPreset('समुद्र के किनारे बीच (Beach) सूर्यास्त बैकग्राउंड')">🏖️ बीच बैकग्राउंड</button>
+        <button class="preset-btn" onclick="applyPreset('साइबरपंक नियॉन सिटी नाइट लुक')">🏙️ नियॉन सिटी</button>
+    </div>
+
+    <!-- Output Display Area -->
+    <div class="chat-box" id="chatBox">
+        अरे भाई! टाइप करो या ऊपर कोई स्टाइल चुनो। मैं सवाल का जवाब भी दूंगा और Pro फोटो भी जनरेट कर दूंगा! 😎🔥
+    </div>
+
+    <img id="aiImageResult" class="generated-img" alt="AI Generated Output" />
+
+    <!-- Text Input -->
+    <div class="input-group">
+        <input type="text" id="userInput" placeholder="सवाल लिखें या फोटो का आइडिया टाइप करें..." />
+    </div>
+
+    <div class="action-btns" style="margin-bottom: 12px;">
+        <button class="btn btn-ask" style="flex:1;" id="askBtn">💬 सवाल का जवाब पाएं</button>
+        <button class="btn btn-generate" style="flex:1;" id="generateImgBtn">🎨 Pro फोटो बनाएं</button>
+    </div>
+
+    <!-- Gallery Upload Section -->
+    <div class="upload-card">
+        <span>अपनी फोटो अपलोड करें:</span>
+        <button class="btn btn-upload" id="uploadTriggerBtn">📁 फोटो चुनें</button>
+        <input type="file" id="fileInput" accept="image/*" />
+    </div>
+
+    <div style="text-align:center;">
+        <img id="userPreview" class="user-preview" alt="Uploaded Preview" />
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const userInput = document.getElementById("userInput");
+        const askBtn = document.getElementById("askBtn");
+        const generateImgBtn = document.getElementById("generateImgBtn");
+        const chatBox = document.getElementById("chatBox");
+        const aiImageResult = document.getElementById("aiImageResult");
+        const uploadTriggerBtn = document.getElementById("uploadTriggerBtn");
+        const fileInput = document.getElementById("fileInput");
+        const userPreview = document.getElementById("userPreview");
+
+        // Preset button helper
+        window.applyPreset = function (text) {
+            userInput.value = text;
+            generateImgBtn.click();
+        };
+
+        // 1. Gallery Photo Upload
+        uploadTriggerBtn.addEventListener("click", () => fileInput.click());
+
+        fileInput.addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    userPreview.src = event.target.result;
+                    userPreview.style.display = "block";
+                    chatBox.innerHTML = "✅ **आपकी फोटो अपलोड हो गई है!** अब ऊपर दिए बटन से कपड़े या बैकग्राउंड जनरेट करें।";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 2. AI Text Q&A Engine
+        askBtn.addEventListener("click", async function () {
+            const query = userInput.value.trim();
+            if (!query) {
+                chatBox.innerHTML = "⚠️ कृपया पहले कोई सवाल या टेक्स्ट टाइप करें!";
+                return;
+            }
+
+            aiImageResult.style.display = "none";
+            chatBox.innerHTML = "⏳ सोच रहा हूँ... उत्तर तैयार किया जा रहा है...";
+
+            try {
+                const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(query)}`);
+                if (!response.ok) throw new Error("API request failed");
+                const answer = await response.text();
+                chatBox.innerHTML = `<strong>🤖 एआई का जवाब:</strong><br>${answer}`;
+            } catch (err) {
+                console.error("Text Error:", err);
+                chatBox.innerHTML = "❌ नेटवर्क समस्या के कारण उत्तर नहीं मिल सका। कृपया पुनः प्रयास करें।";
+            }
+        });
+
+        // 3. Pro AI Image Generator
+        generateImgBtn.addEventListener("click", function () {
+            const promptText = userInput.value.trim();
+            if (!promptText) {
+                chatBox.innerHTML = "⚠️ फोटो बनाने के लिए विवरण लिखें (उदा: कोट पेंट में लड़का या बीच बैकग्राउंड)!";
+                return;
+            }
+
+            chatBox.innerHTML = "🎨 **Pro HD फोटो जनरेट की जा रही है...** कृपया 3-5 सेकंड प्रतीक्षा करें।";
+            aiImageResult.style.display = "none";
+
+            // Random seed for fresh images every click
+            const randomSeed = Math.floor(Math.random() * 100000);
+            const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(promptText)}?width=1024&height=1024&nologo=true&seed=${randomSeed}`;
+
+            const tempImg = new Image();
+            tempImg.onload = function () {
+                aiImageResult.src = imageUrl;
+                aiImageResult.style.display = "block";
+                chatBox.innerHTML = `✨ **फोटो तैयार है!** <br>प्रॉम्प्ट: <em>"${promptText}"</em>`;
+            };
+            tempImg.onerror = function () {
+                chatBox.innerHTML = "❌ फोटो जनरेट करने में कोई समस्या आई। कृपया दूसरा प्रॉम्प्ट आज़माएं।";
+            };
+            tempImg.src = imageUrl;
+        });
+
+        // Enter key shortcut
+        userInput.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                askBtn.click();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>target.result}')`;
