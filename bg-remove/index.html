@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>एआई फोटो मेकर दोस्त ✨</title>
+    <title>मस्त गूगल सर्च और फोटो अपलोडर एआई 🤖🔥</title>
     <style>
-        /* आधुनिक और सुंदर डिज़ाइन */
+        /* आधुनिक और प्रीमियम लुक */
         * {
             margin: 0;
             padding: 0;
@@ -18,24 +17,23 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #0f172a;
+            background-color: #0b0f19;
         }
 
-        /* मुख्य बैकग्राउंड जहाँ एआई फोटो दिखेगी */
+        /* मुख्य बैकग्राउंड जहाँ लाइव फोटो दिखेगी */
         #bg-wallpaper {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
+            background: linear-gradient(135deg, #111827, #0b0f19);
             background-size: cover;
             background-position: center;
-            transition: background-image 1s ease-in-out;
+            transition: background-image 0.5s ease-in-out;
             z-index: 1;
         }
 
-        /* हल्का डार्क पर्दा ताकि टेक्स्ट साफ़ दिखे */
         .overlay {
             position: fixed;
             top: 0;
@@ -49,7 +47,7 @@
         /* चैट और कंट्रोल बॉक्स */
         .chat-container {
             position: absolute;
-            bottom: 40px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
@@ -59,50 +57,33 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 24px;
-            padding: 25px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            padding: 22px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
             z-index: 3;
             color: white;
             text-align: center;
         }
 
         h2 {
-            font-size: 22px;
+            font-size: 20px;
             margin-bottom: 12px;
-            color: #60a5fa;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            color: #38bdf8;
         }
 
-        /* एआई के बात करने का बॉक्स */
+        /* बातचीत और जोक बॉक्स */
         .ai-response {
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(15, 23, 42, 0.8);
             padding: 15px;
             border-radius: 16px;
             margin-bottom: 15px;
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.5;
             text-align: left;
-            border-left: 4px solid #3b82f6;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            border-left: 5px solid #ec4899;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
         }
 
-        /* लोडिंग टेक्स्ट */
-        .loader {
-            display: none;
-            color: #38bdf8;
-            font-style: italic;
-            font-weight: bold;
-            margin-bottom: 12px;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
-        }
-
-        /* इनपुट बॉक्स ग्रुप */
+        /* इनपुट बॉक्स एरिया */
         .input-group {
             display: flex;
             gap: 10px;
@@ -111,160 +92,153 @@
 
         input[type="text"] {
             flex: 1;
-            padding: 14px 20px;
+            padding: 12px 20px;
             border: none;
             border-radius: 30px;
             outline: none;
-            font-size: 16px;
-            background: rgba(255, 255, 255, 0.95);
-            color: #1e293b;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-size: 15px;
+            background: #fff;
+            color: #0f172a;
         }
 
-        /* बटन स्टाइल */
-        .btn-make {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        button {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
             color: white;
             border: none;
-            padding: 14px 28px;
+            padding: 12px 24px;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
         }
 
-        .btn-make:hover {
+        button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
         }
 
-        .btn-download {
-            background: linear-gradient(135deg, #10b981, #047857);
-            color: white;
-            border: none;
-            padding: 10px 20px;
+        /* फोटो अपलोड करने का स्टाइल */
+        .upload-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .upload-section label {
+            background: #06b6d4;
+            padding: 8px 15px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
-            display: none;
-            margin: 0 auto;
             transition: 0.3s;
         }
 
-        .btn-download:hover {
-            transform: scale(1.05);
+        .upload-section label:hover {
+            background: #0891b2;
+        }
+
+        input[type="file"] {
+            display: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- बैकग्राउंड वॉलपेपर -->
+    <!-- बैकग्राउंड इमेज परत -->
     <div id="bg-wallpaper"></div>
     <div class="overlay"></div>
 
-    <!-- मुख्य चैट इंटरफ़ेस -->
+    <!-- चैट इंटरफेस -->
     <div class="chat-container">
-        <h2>जादुई एआई फोटो दोस्त 🤖🎨</h2>
+        <h2>गूगल सर्च और फोटो अपलोडर दोस्त 🤖🖼️</h2>
         
-        <!-- यहाँ एआई बात करेगा -->
         <div class="ai-response" id="ai-text">
-            नमस्ते दोस्त! आप जो भी सोच रहे हैं, यहाँ लिख दीजिए। मैं आपसे बातें भी करूँगा और तुरंत आपके लिए एक बिल्कुल नई असली फोटो बनाकर बैकग्राउंड में लगा दूँगा! ❤️
+            अरे भाई! अब आपकी वेबसाइट सीधे इंटरनेट से लाइव तस्वीरें खोजेगी। नीचे किसी भी जगह या चीज का नाम लिखो, या फिर अपनी खुद की फोटो अपलोड करके जादू देखो! 😜🔥
         </div>
-        
-        <div class="loader" id="loading-msg">⏳ आपकी सोच को फोटो में बदला जा रहा है, कृपया 5 सेकंड रुकें...</div>
 
-        <!-- फोटो बनाने के लिए इनपुट -->
+        <!-- गूगल/लाइव सर्च इनपुट -->
         <div class="input-group">
-            <input type="text" id="user-input" placeholder="जैसे: मनाली के पहाड़ों में बर्फबारी, या लाल रंग की कार...">
-            <button class="btn-make" onclick="generateImage()">फोटो बनाओ 🚀</button>
+            <input type="text" id="user-input" placeholder="जैसे: मनाली, गोवा बीच, लग्जरी कार...">
+            <button onclick="searchLiveImage()">खोजें 🚀</button>
         </div>
 
-        <!-- एचडी डाउनलोड बटन -->
-        <button class="btn-download" id="download-btn" onclick="downloadPhoto()">📥 इस फोटो को HD में डाउनलोड करें</button>
+        <!-- फाइल अपलोड सेक्शन -->
+        <div class="upload-section">
+            <span>या अपनी फोटो लगाएं:</span>
+            <label for="image-uploader">📁 फोटो चुनें</label>
+            <input type="file" id="image-uploader" accept="image/*" onchange="uploadLocalImage(event)">
+        </div>
     </div>
 
     <script>
-        let currentImageUrl = "";
+        // मजेदार चुटकुलों की लिस्ट
+        const jokes = [
+            "लो भाई! इंटरनेट के कोने-कोने से ढूंढकर आपके लिए कड़क फोटो लगा दी है। पसंद आए तो समोसा कूरियर कर देना! 🥐😂",
+            "वाह हुजूर! क्या चॉइस है आपकी। पीछे का बैकग्राउंड देखकर जलने वाले और जलेंगे! 🔥😜",
+            "लीजिए मालिक! फोटो लाइव लोड हो चुकी है। अब स्क्रीन को ज्यादा मत निहारना, वरना नजर लग जाएगी! 🧿🤭",
+            "अरे गजब! ये बैकग्राउंड तो एकदम झकास लग रहा है। चलो इसी बात पर एक कप कड़क चाय हो जाए! ☕️✨",
+            "लो दोस्त, मैंने फोटो बदल दी है। अब जल्दी से बताओ, इस नए बैकग्राउंड में आप घूमने कब जा रहे हो? 😎🎒"
+        ];
 
-        // Enter दबाने पर भी फोटो बनेगी
-        document.getElementById("user-input").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                generateImage();
-            }
-        });
-
-        async function generateImage() {
+        // 1. लाइव इमेज सर्च फंक्शन (Google/Unsplash लाइव नेटवर्क आधारित)
+        function searchLiveImage() {
             const inputField = document.getElementById("user-input");
             const aiTextField = document.getElementById("ai-text");
-            const loader = document.getElementById("loading-msg");
             const bgWallpaper = document.getElementById("bg-wallpaper");
-            const downloadBtn = document.getElementById("download-btn");
             
             const userText = inputField.value.trim();
             if (!userText) return;
 
-            // रीसेट और लोडिंग चालू
+            aiTextField.innerHTML = "इंटरनेट पर ढूंढ रहा हूँ, कृपया रुकें... 🌐";
             inputField.value = "";
-            loader.style.display = "block";
-            downloadBtn.style.display = "none";
-            aiTextField.innerHTML = "सोच रहा हूँ और ब्रश तैयार कर रहा हूँ...";
 
-            try {
-                // पोलिनेशन एआई का मुफ्त रियल-टाइम इमेज जनरेटर यूज़ कर रहे हैं
-                // यह यूजर के लिखे शब्दों (Prompt) से लाइव फोटो बनाता है
-                const cleanText = encodeURIComponent(userText);
-                const randomSeed = Math.floor(Math.random() * 100000); // हर बार नई फोटो के लिए
-                const aiGeneratedUrl = `https://pollinations.ai{cleanText}?width=1600&height=900&seed=${randomSeed}&enhance=true`;
+            // यह लाइव यूआरएल बिना ब्लॉक हुए कीवर्ड के आधार पर सीधे इंटरनेट से फ्रेश इमेज लोड करता है
+            const finalImageUrl = `https://unsplash.com`; // बैकअप
+            const liveQueryUrl = `https://unsplash.com{encodeURIComponent(userText)}&sig=${Math.floor(Math.random() * 1000)}`;
 
-                // इमेज को बैकग्राउंड में लोड करना
-                const img = new Image();
-                img.src = aiGeneratedUrl;
-                
-                img.onload = function() {
-                    bgWallpaper.style.backgroundImage = `url('${aiGeneratedUrl}')`;
-                    currentImageUrl = aiGeneratedUrl;
-                    
-                    // प्यारी बातें करने वाला एआई दिमाग (हिंदी रिप्लाई)
-                    let aiReply = "";
-                    if(userText.includes("मनाली") || userText.includes("पहाड़") || userText.includes("snow")) {
-                        aiReply = "वाह भाई! बर्फ से ढके पहाड़ और ठंडी वादियां देखकर मेरा भी मन खुश हो गया। देखिए, मैंने आपके लिए ये खूबसूरत जादुई नजारा बना दिया है! कैसा लगा? 🏔️❄️";
-                    } else if(userText.includes("कार") || userText.includes("गाड़ी") || userText.includes("car")) {
-                        aiReply = "क्या बात है, सुपर कार! आपकी चॉइस एकदम कड़क है दोस्त। ये चमचमाती हुई गाड़ी सीधे आपके बैकग्राउंड में आ चुकी है, लॉन्ग ड्राइव पर चलें? 🏎️💨";
-                    } else if(userText.includes("ताजमहल") || userText.includes("taj")) {
-                        aiReply = "अरे वाह, हुजूर! दुनिया का अजूबा ताजमहल आपके सामने हाजिर है। एआई ने इसे बेहद खूबसूरती से तराशा है। दीदार कीजिए! 🕌✨";
-                    } else {
-                        aiReply = `मजा आ गया दोस्त! आपने कहा और मैंने अपनी जादुई शक्तियों से **"${userText}"** की बिल्कुल नई फोटो तैयार कर दी। बैकग्राउंड देखिए, एकदम लाजवाब लग रहा है ना? 🥰🎨`;
-                    }
+            const img = new Image();
+            img.src = liveQueryUrl;
 
-                    aiTextField.innerHTML = aiReply;
-                    loader.style.display = "none";
-                    downloadBtn.style.display = "block"; // डाउनलोड बटन दिखाएं
+            img.onload = function() {
+                bgWallpaper.style.backgroundImage = `url('${liveQueryUrl}')`;
+                const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+                aiTextField.innerHTML = `<strong>आपने खोजा:</strong> "${userText}"<br><br><strong>🤖 एआई दोस्त:</strong> ${randomJoke}`;
+            };
+
+            img.onerror = function() {
+                aiTextField.innerHTML = "अरे यार! इंटरनेट धीमा है या इस नाम की फोटो नहीं मिली। कुछ और लिखकर देखो! 🥺";
+            };
+        }
+
+        // 2. लोकल फोटो अपलोड फंक्शन
+        function uploadLocalImage(event) {
+            const aiTextField = document.getElementById("ai-text");
+            const bgWallpaper = document.getElementById("bg-wallpaper");
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // अपलोड की हुई फाइल को बैकग्राउंड में सेट करना
+                    bgWallpaper.style.backgroundImage = `url('${e.target.result}')`;
+                    aiTextField.innerHTML = "<strong>🤖 एआई दोस्त:</strong> अरे वाह भाई! ये तो आपकी अपनी पसंदीदा फोटो है। बैकग्राउंड में सेट कर दी है, एकदम बवाल लग रही है! 🥰📸";
                 };
-
-                img.onerror = function() {
-                    throw new Error("फोटों लोड नहीं हो पाई");
-                };
-
-            } catch (error) {
-                aiTextField.innerHTML = "माफ़ करना भाई, इंटरनेट या सर्वर में कुछ दिक्कत आ गई। एक बार फिर लिख कर कोशिश करो! 🥺";
-                loader.style.display = "none";
+                reader.readAsDataURL(file);
             }
         }
 
-        // फोटो डाउनलोड करने का फंक्शन
-        function downloadPhoto() {
-            if(currentImageUrl) {
-                const a = document.createElement('a');
-                a.href = currentImageUrl;
-                a.download = 'AI_Background.jpg';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+        // Enter दबाने पर भी सर्च होगा
+        document.getElementById("user-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                searchLiveImage();
             }
-        }
+        });
     </script>
 </body>
 </html>
