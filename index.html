@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI बैकग्राउंड रिमूवर</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #f4f7f6; padding: 30px; }
+        .container { background: white; padding: 30px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 800px; margin-top: 50px; }
+        input[type="file"], input[type="color"] { margin: 15px 0; font-size: 16px; }
+        button { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        .result-box { margin-top: 30px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        img { max-width: 250px; border-radius: 5px; border: 1px solid #ddd; display: none; }
+        .editor-section { margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>✨ AI फोटो बैकग्राउंड रिमूवर</h2>
+    <p>अपनी फोटो अपलोड करें और तुरंत मस्त बैकग्राउंड बदलें</p>
+
+    <!-- फोटो अपलोड बटन -->
+    <input type="file" id="upload-photo" accept="image/*"><br><br>
+
+    <div class="result-box">
+        <div>
+            <h3 id="orig-title" style="display:none;">1. ओरिजिनल फोटो:</h3>
+            <img id="original-img" src="" alt="Original">
+        </div>
+        <div>
+            <h3 id="rem-title" style="display:none;">2. बैकग्राउंड साफ (Transparent):</h3>
+            <img id="removed-img" src="" alt="Output" style="background: url('https://wikimedia.org');">
+        </div>
+        <div>
+            <h3 id="final-title" style="display:none;">3. नया बैकग्राउंड:</h3>
+            <canvas id="final-canvas" style="max-width: 250px; border-radius: 5px; border: 1px solid #ddd; display:none;"></canvas>
+            <br><br>
+            <a id="download-btn" style="display:none;"><button style="background: #007bff;">HD डाउनलोड करें</button></a>
+        </div>
+    </div>
+
+    <!-- बैकग्राउंड टूल -->
+    <div class="editor-section" id="editor">
+        <h3>🎨 मस्त बैकग्राउंड का रंग चुनें:</h3>
+        <input type="color" id="bg-color" value="#007bff"><br><br>
+        <button id="apply-btn">नया बैकग्राउंड सेट करें</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('upload-photo').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const originalImg = document.getElementById('original-img');
+        originalImg.src = URL.createObjectURL(file);
+        originalImg.style.display = 'block';
+        document.getElementById('orig-title').style.display = 'block';
+
+        // बिना सर्वर के तुरंत टेस्टिंग के लिए फोटो को यहाँ दिखा रहे हैं
+        const removedImg = document.getElementById('removed-img');
+        removedImg.src = originalImg.src;
+        removedImg.style.display = 'block';
+        document.getElementById('rem-title').style.display = 'block';
+        document.getElementById('editor').style.display = 'block';
+    });
+
+    document.getElementById('apply-btn').addEventListener('click', function() {
+        const img = document.getElementById('removed-img');
+        const color = document.getElementById('bg-color').value;
+        const canvas = document.getElementById('final-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = img.naturalWidth || 500;
+        canvas.height = img.naturalHeight || 500;
+
+        ctx.fillStyle = color;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        canvas.style.display = 'block';
+        document.getElementById('final-title').style.display = 'block';
+
+        const downloadBtn = document.getElementById('download-btn');
+        downloadBtn.href = canvas.toDataURL("image/png");
+        downloadBtn.download = "mast-background.png";
+        downloadBtn.style.display = 'inline-block';
+    });
+</script>
+
+</body>
+</html>
