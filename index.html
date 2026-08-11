@@ -242,3 +242,266 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>जादुई एआई फोटो और कपड़े बदलने वाला दोस्त 🤖👔</title>
+    <style>
+        /* फुल स्क्रीन सेटअप */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body, html {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #05050a;
+        }
+
+        /* मुख्य बैकग्राउंड जहाँ एआई की बनाई फोटो दिखेगी */
+        #bg-wallpaper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f172a, #020617);
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1s ease-in-out;
+            z-index: 1;
+        }
+
+        /* हल्का पर्दा ताकि टेक्स्ट साफ़ दिखे */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+
+        /* प्रीमियम चैट बॉक्स */
+        .chat-container {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 580px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+            z-index: 3;
+            color: white;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #a855f7; /* रॉयल पर्पल */
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* एआई बातचीत करने का डिब्बा */
+        .ai-response {
+            background: rgba(15, 23, 42, 0.85);
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: left;
+            border-left: 5px solid #a855f7;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+            max-height: 160px;
+            overflow-y: auto;
+        }
+
+        /* इनपुट बॉक्स एरिया */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 14px 22px;
+            border: none;
+            border-radius: 30px;
+            outline: none;
+            font-size: 16px;
+            background: #fff;
+            color: #0f172a;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* जादुई बटन */
+        .btn-magic {
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-magic:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+        }
+
+        /* लोडिंग टेक्स्ट */
+        .loader {
+            display: none;
+            color: #38bdf8;
+            font-style: italic;
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        /* एचडी डाउनलोड बटन */
+        .btn-hd {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            display: none;
+            margin: 5px auto 0;
+            transition: 0.3s;
+        }
+
+        .btn-hd:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- बैकग्राउंड जहाँ एआई की फोटो दिखेगी -->
+    <div id="bg-wallpaper"></div>
+    <div class="overlay"></div>
+
+    <!-- मुख्य चैट डिब्बा -->
+    <div class="chat-container">
+        <h2>जादुई एआई फोटो मेकर दोस्त 🤖🎨👔</h2>
+        
+        <div class="ai-response" id="ai-text">
+            अरे भाई! अब मैं सिर्फ सर्च नहीं करता, बल्कि बिल्कुल नई फोटो बनाता हूँ! नीचे कुछ भी लिखो—जैसे: <strong>"ब्लैक कोट-पेंट पहना हुआ लड़का"</strong>, <strong>"मनाली का धांसू पोस्टर"</strong> या <strong>"लाल शर्ट में रॉकस्टार"</strong>। मैं तुरंत बनाकर बैकग्राउंड बदल दूँगा! 🤭🔥
+        </div>
+        
+        <div class="loader" id="loading-msg">⏳ एआई जादुई ब्रश से आपकी फोटो तैयार कर रहा है, 5 सेकंड रुकें...</div>
+
+        <!-- टाइप करने का इनपुट -->
+        <div class="input-group">
+            <input type="text" id="user-input" placeholder="जैसे: कोट-पेंट पहने स्टाइलिश लड़का, या मनाली का पोस्टर...">
+            <button class="btn-magic" onclick="generateAiPhoto()">फोटो बनाओ 🚀</button>
+        </div>
+
+        <!-- फोटो डाउनलोड बटन -->
+        <button class="btn-hd" id="download-btn" onclick="downloadPhoto()">📥 इस एआई फोटो को HD में डाउनलोड करें</button>
+    </div>
+
+    <script>
+        let currentImageUrl = "";
+
+        // Enter बटन दबाने पर भी काम होगा
+        document.getElementById("user-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                generateAiPhoto();
+            }
+        });
+
+        // मजेदार एआई बातें और जोक्स
+        const funnyResponses = [
+            "लो भाई! जैसा आपने कहा, एआई ने बिल्कुल वैसी ही कड़क फोटो बना दी है। पीछे देखो, एकदम हीरो लग रहे हो! 😎🔥",
+            "वाह हुजूर! क्या चॉइस है। ये कोट-पेंट/पोस्टर डिजाइन देखकर पड़ोसी पक्का जलेंगे! पसंद आए तो चाय-समोसा तय रहा! 🥐😂",
+            "लीजिए बॉस! आपकी फरमाइश पर एआई ने एकदम नया लुक तैयार कर दिया है। ज्यादा देर मत देखना वरना नजर लग जाएगी! 🧿🤭",
+            "अरे गजब! बैकग्राउंड तो देखो यार, एकदम बवाल लग रहा है! एआई ने सच में कमाल की पेंटिंग बनाई है ना? 🎨✨"
+        ];
+
+        async function generateAiPhoto() {
+            const inputField = document.getElementById("user-input");
+            const aiTextField = document.getElementById("ai-text");
+            const loader = document.getElementById("loading-msg");
+            const bgWallpaper = document.getElementById("bg-wallpaper");
+            const downloadBtn = document.getElementById("download-btn");
+            
+            const promptText = inputField.value.trim();
+            if (!promptText) return;
+
+            // रीसेट और लोडिंग चालू
+            inputField.value = "";
+            loader.style.display = "block";
+            downloadBtn.style.display = "none";
+            aiTextField.innerHTML = "आपकी सोच को असली फोटो में बदल रहा हूँ... 🧠✨";
+
+            try {
+                // यह असली एडवांस्ड AI जनरेटर है जो टेक्स्ट से लाइव नई इमेज बनाता है
+                const cleanPrompt = encodeURIComponent(promptText);
+                const randomSeed = Math.floor(Math.random() * 999999); // हर बार बिल्कुल नई इमेज के लिए
+                const aiApiUrl = `https://pollinations.ai{cleanPrompt}?width=1200&height=700&seed=${randomSeed}&enhance=true`;
+
+                // इमेज को बैकग्राउंड में लोड करना
+                const img = new Image();
+                img.src = aiApiUrl;
+                
+                img.onload = function() {
+                    bgWallpaper.style.backgroundImage = `url('${aiApiUrl}')`;
+                    currentImageUrl = aiApiUrl;
+                    
+                    // रैंडम मजेदार रिप्लाई चुनना
+                    const randomText = funnyResponses[Math.floor(Math.random() * funnyResponses.length)];
+                    
+                    aiTextField.innerHTML = `<strong>आपने बनवाया:</strong> "${promptText}"<br><br><strong>🤖 एआई दोस्त:</strong> ${randomText}`;
+                    loader.style.display = "none";
+                    downloadBtn.style.display = "block"; // डाउनलोड बटन दिखाएं
+                };
+
+                img.onerror = function() {
+                    throw new Error("इमेज लोड फेल");
+                };
+
+            } catch (error) {
+                aiTextField.innerHTML = "अरे यार! एआई का ब्रश टूट गया या इंटरनेट धीमा है। एक बार फिर से लिखकर कोशिश करो भाई! 🥺";
+                loader.style.display = "none";
+            }
+        }
+
+        // डाउनलोड फंक्शन
+        function downloadPhoto() {
+            if(currentImageUrl) {
+                const a = document.createElement('a');
+                a.href = currentImageUrl;
+                a.download = 'AI_Magic_Photo.jpg';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
+    </script>
+</body>
+</html>
