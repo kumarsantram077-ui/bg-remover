@@ -165,4 +165,21 @@ h1 {
             };
         }
     });
-</script>
+</script>function doPost(e) {
+  try {
+    var p = e.parameter;
+    var body = "You have a new contact form submission:\n\n" +
+               "Name: " + p.name + "\n" +
+               "Email: " + p.email + "\n" +
+               "Message: " + p.message;
+               
+    MailApp.sendEmail("kumarsantram077@gmail.com", "New Web Form Submission", body);
+    
+    return ContentService.createTextOutput(JSON.stringify({"result": "success"}))
+                         .setMimeType(ContentService.MimeType.JSON);
+  } catch(error) {
+    return ContentService.createTextOutput(JSON.stringify({"result": "error", "error": error}))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
